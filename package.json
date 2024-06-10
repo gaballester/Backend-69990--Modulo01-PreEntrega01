@@ -1,0 +1,20 @@
+{
+  "name": "preentrega01",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "entrega": "nodemon ./src/app.js",
+    "entregaDebug": "nodemon --inspect ./src/app.js"
+  },
+  "author": "Guillermo Ballester",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.2"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
