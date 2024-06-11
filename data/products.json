@@ -10,7 +10,7 @@
       "img3"
     ],
     "code": "A01",
-    "stock": "A01",
+    "stock": 12345,
     "status": true,
     "category": "A"
   },

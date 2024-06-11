@@ -13,13 +13,11 @@ class ProductManager {
             let productsArray = await this.readFile(); 
 
             if ( !this.isValidObject(product)){
-                console.error("All fields are required!")
-                return
+                return "Error adding Product - All fields are required!"
             }
             
             if(productsArray.some(item => item.code === product.code)) {
-                console.error("The code field must be unique")
-                return
+                return("Error: The value of the Code field must be unique")
             }
 
             const currentId = await this.lastProductId(productsArray)
@@ -43,8 +41,7 @@ class ProductManager {
             return newProduct      
 
         } catch (error) {
-            console.log(`There was an error when trying to add product`,error)
-            return(`There was an error when trying to add product`)
+              return(`There was an error when trying to add product`)
         }
     } 
 
@@ -62,7 +59,7 @@ class ProductManager {
             const productsArray = await this.getProducts()
             const productFind = productsArray.find(prod => prod.id == id)
             if (productFind){
-                console.log('Product not found: ',productFind)
+                return productFind
             } else {
                 console.error("Product not found -  getProductbyid.")
             }
@@ -86,10 +83,8 @@ class ProductManager {
                 }
                 productsArray[pos] = updateProduct
                 await this.saveFile(productsArray);              
-                console.log('Product updated: ',updateProduct)
-                return
+                return updateProduct
             } else {
-                console.log('Product Not found to update')
                 return('Error, product not found')
             }
         } catch (error) {
@@ -108,8 +103,7 @@ class ProductManager {
                 return ('Poduct not found')
             }
             await this.saveFile(productsArray)
-            console.log(`Product with id ${productId} has been successfully removed.`)
-            return('Product removed OK')
+            return(`Product with id ${productId} has been successfully removed.`)
         } catch (error) {
             return(error)
         }

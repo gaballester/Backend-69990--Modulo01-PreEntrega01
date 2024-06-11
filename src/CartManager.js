@@ -87,7 +87,7 @@ class CartManager {
       const cart = carts.reduce((previous, current) => {
         return current.id > previous.id ? current : previous;
       });
-      lastId = product.id + 1;
+      lastId = cart.id + 1;
     }
     return lastId;
   };
