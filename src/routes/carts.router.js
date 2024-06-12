@@ -1,38 +1,42 @@
 import { Router } from 'express';
-import { cartManager } from '../app.js';
+import { CartManager } from '../CartManager.js'
+
+const cartJsonFile = "./data/carts.json"
+const cartManager = new CartManager(cartJsonFile)
 
 export const cartsRouter = Router()
 
 cartsRouter.post('/', async (req,res) => {
     try {
-        const response = await cartManager.addNewCart()
-        res.json(response)
+        const newCart = await cartManager.addNewCart()
+        res.json(newCart)
     } catch (error) {
-        res.send('Error adding new cart')
+        res.status(500).json({ error: "Internal Server Error -adding new cart"})
     }
- 
 })
 
 cartsRouter.get('/:id', async (req,res) => {
     const { id } = req.params
     try {
-        const response = await cartManager.getCartProducts(parseInt(id))
-        res.send(response)      
+        const cartProducts = await cartManager.getCartProducts(parseInt(id))
+        res.json(cartProducts)      
     } catch (error) {
-        res.send('error to access to products cart')
+        res.status(500).json({ error: "Internal Server Error - error to access to products cart"})
     }
 } )
 
 cartsRouter.post('/:cid/product/:pid', async (req,res)  => {
     const { cid, pid } = req.params
     try {
-        await cartManager.addProducttoCart(parseInt(cid),parseInt(pid))
-        res.send('product added to cart')
+        const cart = await cartManager.addProducttoCart(parseInt(cid),parseInt(pid))
+        res.status(201).json({message: "Product added successfully"});
     } catch (error) {
-        res.send('Error to add product to Cart')
+        res.status(500).json({ error: "Internal Server Error - adding product to Cart"})
     }
 })
 
-
-
+// Middleware for not defined routes
+cartsRouter.use((req, res) => {
+    res.status(404).json({ error: "Not Found" });
+})
 

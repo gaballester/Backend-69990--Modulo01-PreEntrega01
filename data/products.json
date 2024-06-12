@@ -1,20 +1,5 @@
 [
   {
-    "id": 1,
-    "title": "Product 01 modified",
-    "description": "Product 01 description modified",
-    "price": 1,
-    "thumbnails": [
-      "img1",
-      "img2",
-      "img3"
-    ],
-    "code": "A01",
-    "stock": 12345,
-    "status": true,
-    "category": "A"
-  },
-  {
     "id": 2,
     "title": "Product 02",
     "description": "Product 02 description",
@@ -25,9 +10,24 @@
       "img2.3"
     ],
     "code": "A02",
-    "stock": "A02",
+    "stock": 120,
     "status": true,
     "category": "B"
+  },
+  {
+    "id": 1,
+    "title": "Product 01 modified",
+    "description": "Product 01 description modified",
+    "price": 10,
+    "thumbnails": [
+      "img1.1",
+      "img1.2",
+      "img1.3"
+    ],
+    "code": "A01",
+    "stock": 150,
+    "status": true,
+    "category": "A"
   },
   {
     "id": 3,
@@ -40,7 +40,7 @@
       "img3.3"
     ],
     "code": "A03",
-    "stock": "A03",
+    "stock": 1200,
     "status": true,
     "category": "B"
   }

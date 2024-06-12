@@ -13,11 +13,11 @@ class ProductManager {
             let productsArray = await this.readFile(); 
 
             if ( !this.isValidObject(product)){
-                return "Error adding Product - All fields are required!"
+                throw "Error: All fields are required for adding a product!"
             }
             
             if(productsArray.some(item => item.code === product.code)) {
-                return("Error: The value of the Code field must be unique")
+                throw "Error: The value of the Code field must be unique!"
             }
 
             const currentId = await this.lastProductId(productsArray)
@@ -29,7 +29,7 @@ class ProductManager {
                 price: product.price,
                 thumbnails: product.thumbnails,
                 code: product.code,
-                stock: product.code,
+                stock: product.stock,
                 status: product.status,
                 category: product.category
             }
@@ -41,7 +41,7 @@ class ProductManager {
             return newProduct      
 
         } catch (error) {
-              return(`There was an error when trying to add product`)
+              throw `Internal Server Error when trying to add product: ${error}`
         }
     } 
 
@@ -50,7 +50,7 @@ class ProductManager {
             let productsArray = await this.readFile(); 
             return productsArray
         } catch (error) {
-            return('Error: ',error)
+            throw `Error while fetching products: ${error}`
         }
      }
 
@@ -61,10 +61,10 @@ class ProductManager {
             if (productFind){
                 return productFind
             } else {
-                console.error("Product not found -  getProductbyid.")
+                throw "Product not found."
             }
         } catch (error) {
-            return(`Error: ${error}`)
+            throw `Error while fetching product by ID: ${error}`
         }
     }
 
@@ -85,10 +85,10 @@ class ProductManager {
                 await this.saveFile(productsArray);              
                 return updateProduct
             } else {
-                return('Error, product not found')
+               throw 'Product not found.'
             }
         } catch (error) {
-            return(error)
+            throw `Error while updating product: ${error}`
         }
     }
 
@@ -98,60 +98,56 @@ class ProductManager {
             const pos = productsArray.findIndex(prod => prod.id === pid)
             if ( pos !== -1 ) {
                 productsArray.splice(pos,1)
+                await this.saveFile(productsArray)
+                return `Product with id ${pid} has been successfully removed.`
             }
             else {
-                return ('Poduct not found')
+                 throw 'Product not found.'
             }
-            await this.saveFile(productsArray)
-            return(`Product with id ${productId} has been successfully removed.`)
         } catch (error) {
-            return(error)
+            throw `Error while deleting product: ${error}`
         }
     }
    
     // aux internal metods
 
-    isValidObject(objeto) {
+    isValidObject = (objeto) => {
         for (let property in objeto) {
-          if (objeto.hasOwnProperty(property)) {
             if (objeto[property] === undefined || objeto[property] === null || objeto[property] === '') {
-              return false; 
+                return false
             }
-          }
         }
-        return true;
+        return true
     }
 
     saveFile = async(productsArrays) => {
         try {
             await fs.writeFile(this.path, JSON.stringify(productsArrays, null, 2));
-            return('File recorded successfully')
+            return `File "${this.path}" saved successfully`
         } catch (error) {
-            console.log(`File recording error ${this.path}`, error);
-            return(error)
+            console.error(`Error saving file "${this.path}":`, error)
+            throw error
         }
     }
 
     readFile = async () => {
         try {
-            const response = await fs.readFile(this.path, "utf-8");
+            const response = await fs.readFile(this.path, "utf-8")
             // convert JSON array will be parsed into a JavaScript array
-            return JSON.parse(response);
+            return JSON.parse(response)
         } catch (error) {
-            console.log(`Error reading file ${this.path}`, error);
+            console.error(`Error reading file "${this.path}":`, error)
+            throw error
         }
     }
 
     lastProductId = async (products) => {
-        let lastId = 1
         if (products.length > 0) {
-            const product = products.reduce((previous, current) => {
-                return current.id > previous.id? current : previous;
-              })
-              console.log("product",product)
-            lastId = product.id + 1
-         }
-        return lastId
+            // Sort the products by ID in descending order and take the first element
+            const sortedProducts = products.sort((a, b) => b.id - a.id);
+            return sortedProducts[0].id + 1; // Devolver el siguiente ID disponible
+        }
+        return 1; // if there are no products, return 1 as the first ID
     }
 
 }

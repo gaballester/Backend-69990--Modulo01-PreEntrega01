@@ -2,27 +2,24 @@ import { promises as fs } from "fs";
 
 class CartManager {
   constructor(path) {
-    (this.carts = []), (this.path = path);
+    this.carts = [],
+    this.path = path
   }
 
   getCarts = async () => {
     try {
-      let cartsArray = await this.readFile();
-      return cartsArray;
+      let cartsArray = await this.readFile()
+      return cartsArray
     } catch (error) {
-      return "Error: ", error;
+      throw new { error: `Error getting carts: ${error}` }
     }
-  };
+  }
 
   getCartProducts = async (id) => {
-    const carts = await this.getCarts();
-    const cart = carts.find((cart) => cart.id === id);
-    if (cart) {
-      return cart.products;
-    } else {
-      return "Cart isn't available";
-    }
-  };
+    const carts = await this.getCarts()
+    const cart = carts.find((cart) => cart.id === id)
+    return cart ? cart.products : "Cart is not available"
+  }
 
   addNewCart = async () => {
     const id = await this.getLastCartId();
@@ -30,35 +27,42 @@ class CartManager {
     this.carts = await this.getCarts();
     this.carts.push(newCart);
     this.saveFile(this.carts);
-    return `new cart created: ${newCart}`;
+    return newCart
   };
 
   addProducttoCart = async (cartId, productId) => {
+    if (!cartId || !productId) {
+      throw new Error("Invalid cartId or productId");
+    }
+
     const carts = await this.getCarts();
     const index = carts.findIndex((cart) => cart.id === cartId);
+
     if (index != -1) {
       const cartProducts = await this.getCartProducts(cartId);
       const prodIndex = cartProducts.findIndex(product => product.productId === productId);
+      
       if (prodIndex != -1) {
-        cartProducts[prodIndex].quantity = cartProducts[prodIndex].quantity + 1;
+        cartProducts[prodIndex].quantity += 1
       } else {
         const object = {
             "productId" : productId,
             "quantity" : 1
         } 
-        cartProducts.push(object);
+        cartProducts.push(object)
       }
-      console.log(carts[index])
-      carts[index].products = cartProducts;
+     
+      carts[index].products = cartProducts
 
-      await this.saveFile(carts);
-      console.log("product added to cart");
+      await this.saveFile(carts)
+      console.log("product added to cart")
+      
     } else {
-      console.log("cart not found");
+      throw new Error("Cart not found")   
     }
-  };
+  }
 
-  // additional functions
+  // additional functions ======================================================================
 
   readFile = async () => {
     try {
@@ -66,30 +70,25 @@ class CartManager {
       // convert JSON array will be parsed into a JavaScript array
       return JSON.parse(response);
     } catch (error) {
-      console.log(`Error al leer archivo ${this.path}`, error);
+      throw { error: `Error reading file ${this.path}: ${error}` }
     }
-  };
+  }
 
   saveFile = async (cartArrays) => {
     try {
       await fs.writeFile(this.path, JSON.stringify(cartArrays, null, 2));
       return "carts file saved";
     } catch (error) {
-      console.log(`Error writting file ${this.path}`, error);
-      return error;
+      throw { error: `Error writting file ${this.path}: ${error}` }
     }
-  };
+  }
 
-  getLastCartId = async () => {
+  getLastCartId = async () =>{
     const carts = await this.readFile();
-    let lastId = 1;
-    if (carts.length > 0) {
-      const cart = carts.reduce((previous, current) => {
-        return current.id > previous.id ? current : previous;
-      });
-      lastId = cart.id + 1;
-    }
+    const lastId = carts.length > 0 ? Math.max(...carts.map((cart) => cart.id)) + 1 : 1;
     return lastId;
-  };
+  }
 }
+    
+
 export { CartManager };
