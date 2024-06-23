@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { CartManager } from '../CartManager.js'
+import { CartManager } from '../controllers/CartManager.js'
 
-const cartJsonFile = "./data/carts.json"
+const cartJsonFile = './src/models/carts.json'
 const cartManager = new CartManager(cartJsonFile)
 
 export const cartsRouter = Router()

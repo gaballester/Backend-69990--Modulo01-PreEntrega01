@@ -1,0 +1,115 @@
+[
+  {
+    "id": 11,
+    "title": "Product 03",
+    "description": "Product 03 description",
+    "price": 4000,
+    "thumbnails": [
+      "img3.1",
+      "img3.2",
+      "img3.3"
+    ],
+    "code": "A055",
+    "stock": 1200,
+    "status": true,
+    "category": "B"
+  },
+  {
+    "id": 7,
+    "title": "Product 05",
+    "description": "Product Description 05",
+    "price": "66",
+    "thumbnails": [],
+    "code": "A053",
+    "stock": "78",
+    "status": true,
+    "category": "C"
+  },
+  {
+    "id": 6,
+    "title": "Product 05",
+    "description": "Product Description 05",
+    "price": "66",
+    "thumbnails": [],
+    "code": "A052",
+    "stock": "78",
+    "status": true,
+    "category": "C"
+  },
+  {
+    "id": 5,
+    "title": "Product 05",
+    "description": "Product Description 05",
+    "price": "66",
+    "thumbnails": [],
+    "code": "A05",
+    "stock": "78",
+    "status": true,
+    "category": "C"
+  },
+  {
+    "id": 4,
+    "title": "Product 04",
+    "description": "Product Description 04",
+    "price": "34.33",
+    "thumbnails": [],
+    "code": "A04",
+    "stock": "132",
+    "status": true,
+    "category": "C"
+  },
+  {
+    "id": 3,
+    "title": "Product 03",
+    "description": "Description 03",
+    "price": "234",
+    "thumbnails": [],
+    "code": "A03",
+    "stock": "300",
+    "status": true,
+    "category": "C"
+  },
+  {
+    "id": 2,
+    "title": "Product 02",
+    "description": "Product 02 description",
+    "price": 4000,
+    "thumbnails": [
+      "img2.1",
+      "img2.2",
+      "img2.3"
+    ],
+    "code": "A02",
+    "stock": 100,
+    "status": true,
+    "category": "B"
+  },
+  {
+    "id": 1,
+    "title": "Product 01",
+    "description": "Product 01 description",
+    "price": 4000,
+    "thumbnails": [
+      "img1.1",
+      "img1.2",
+      "img1.3"
+    ],
+    "code": "A01",
+    "stock": 120,
+    "status": true,
+    "category": "A"
+  },
+  {
+    "id": 12,
+    "title": "333",
+    "description": "333",
+    "price": "333",
+    "thumbnails": [
+      "\"img1\",\"img2\""
+    ],
+    "code": "333",
+    "stock": "333",
+    "status": true,
+    "category": "3333"
+  }
+]

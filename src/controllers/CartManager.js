@@ -63,7 +63,6 @@ class CartManager {
   }
 
   // additional functions ======================================================================
-
   readFile = async () => {
     try {
       const response = await fs.readFile(this.path, "utf-8");

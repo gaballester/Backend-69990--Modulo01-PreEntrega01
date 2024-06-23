@@ -8,7 +8,7 @@ We are going to detail in this documentation the different routes and parameters
 
 # API Reference
 
-![Logo](https://www.shutterstock.com/shutterstock/photos/2281829879/display_1500/stock-photo-smart-warehouse-inventory-management-system-concept-manager-using-digital-tablet-showing-warehouse-2281829879.jpg)
+![Logo](./imagesMD/centroAcopioTablet.jpg)
 ### PRODUCTS API REFERENCE
 
 ### Get all products
@@ -16,7 +16,7 @@ Return all products
 ```http
   GET /api/products
 ```
-
+ Markdown
 
 
 ### Get a particular product 
@@ -88,7 +88,7 @@ Delete a product indicating its product ID
 .
 
 
-![Logo](https://img.freepik.com/foto-gratis/carros-compra-fuera-supermercado_23-2148195372.jpg?t=st=1718160899~exp=1718164499~hmac=289038913f83e935d589eedb55a1684608071996ca716c3ce1838212fe1ddd47&w=1380)
+![Logo](./imagesMD/carrito-phone.jpg)
 ### CARTS API REFERENCE
 
 ## Post add a new cart 
@@ -148,4 +148,41 @@ Returns the list of products that belong to the cart with the id parameter provi
 | :-------- | :------- | :----------------------------------- |
 | `id`      | `number` | **Required**. Id of cart to fetch |
 
+---
 
+![Logo](./imagesMD/socket-io-handlebars.jpg)
+
+# Using Handelbars templates and Socket.IO
+
+Handlebars compiles templates into JavaScript functions. This makes the template execution faster than most other template engines.
+Install Handlebars using npm:
+
+`  $ npm install express-handlebars  `
+
+And Socket.IO is a library that enables low-latency, bidirectional and event-based communication between a client and a server.
+
+For install socket-io in the server execute te following command
+
+` npm install socket.io `
+
+### Get all products (http request using handlebars templates)
+Returns the list of all e-commerce products 
+```http
+  GET /
+```
+| Parameter | Type     | Description                          |
+| :-------- | :------- | :----------------------------------- |
+| none   | none|none |
+
+![Logo](./imagesMD/rootResponsehdl.jpg
+)
+
+### Get all products and add products using socket.io and handlebars templates
+
+Shows all products available in the ecommerce site, and allows registration of new products
+```socket-io
+  /realtimeproducts
+```
+
+
+![Logo](./imagesMD/realtimeproducts.jpg)
